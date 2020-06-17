@@ -1,9 +1,9 @@
 ![](preview/preview.gif)
 
-### Transparent fullscreen & monocle workflow for BSPWM
+### Transparent full-screen & monocle work-flow for BSPWM
 
 # Features
-   * Transparent Fullscreen
+   * Transparent Full-screen
    * Transparent Monocle
    * Navigating forward & backward
    * Auto unhide after closing visible nodes
