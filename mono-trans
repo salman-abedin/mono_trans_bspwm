@@ -36,6 +36,7 @@ toggle_fs_on() {
 }
 
 toggle_fs_off() {
+   # This is where you launch the status bar
    $STATUS_BAR &
    bspc config top_padding $top_padding
    bspc desktop -l tiled
