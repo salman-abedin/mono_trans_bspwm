@@ -21,8 +21,12 @@ mono-trans --close                        # closes current node and unhides the 
 
 # FAQ
 ### I don't use yabar!
-Change the status bar variable on top of the script
+Change the status bar variable on top of the script.
 ### I launch my status bar fancy!
-Change the status bar launch section according to your whim
-### My status bar sucks, yours look cool! What's that!
+Change the status bar launch section according to your whim.
+### My status bar sucks. Yours look cool! What's that!
 ![uniblocks](https://github.com/salman-abedin/uniblocks)
+### How are you launching those files and folders so fast!
+![uniblocks](https://github.com/salman-abedin/bolt)
+### What is this sorcery of a system!
+![uniblocks](https://github.com/salman-abedin/magpie)
