@@ -45,15 +45,18 @@ toggle_fs_off() {
 case $1 in
 
    --navigate)
+      # Regular navigations
       if [ "$2" = "next" ]; then
          bspc node -f next.local && exit 1
       else
          bspc node -f prev.local && exit 1
       fi
 
+      # Edge cases
       [ ! -f "$nodeList" ] && exit 1
       [ "$(wc -l < "$nodeList")" = 0 ] && exit 1
 
+      # This is where the fun begins
       if [ "$2" = "next" ]; then
          head -1 "$nodeList" | xargs -I% bspc node % -g hidden
          sed -i '1d' "$nodeList"
