@@ -5,8 +5,10 @@
    * Transparent Monocle
    * Navigating forward & backward
    * Auto unhide after closing visible nodes
-   * Completely functional with regular work flow
+   * fully functional with regular work flow
 
+# Dependencies
+   * A compositor(duh!)
 
 # Usage
 
