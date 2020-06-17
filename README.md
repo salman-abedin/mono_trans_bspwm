@@ -18,3 +18,11 @@ mono-trans --toggle [monocle,fullscreen]  # toggle transparent monocle
 mono-trans --navigate [next,prev]         # navigate to next/prev hidden nodes
 mono-trans --close                        # closes current node and unhides the previous one
 ```
+
+# FAQ
+### I don't use yabar!
+Change the status bar variable on top of the script
+### I launch my status bar fancy!
+Change the status bar launch section according to your whim
+### My status bar sucks, yours look cool! What's that!
+![uniblocks](https://github.com/salman-abedin/uniblocks)

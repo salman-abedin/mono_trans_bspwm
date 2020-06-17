@@ -11,7 +11,7 @@ Usage:
 
 eof
 
-[ "$STATUS_BAR" ] || export STATUS_BAR=polybar
+[ "$STATUS_BAR" ] || export STATUS_BAR=yabaar
 top_padding=35
 
 nodeList=/tmp/$(bspc query -D -d)
