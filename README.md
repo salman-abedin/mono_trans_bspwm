@@ -24,7 +24,7 @@ mono-trans --close                        # closes current node and unhides the 
 Change the status bar variable on top of the script.
 ### I launch my status bar fancy!
 Change the status bar launch section according to your whim.
-### My status bar sucks. Yours look cool! What's that!
+### Your status bar looks cool! What's that!
 ![uniblocks](https://github.com/salman-abedin/uniblocks)
 ### How are you launching those files and folders so fast!
 ![bolt](https://github.com/salman-abedin/bolt)
