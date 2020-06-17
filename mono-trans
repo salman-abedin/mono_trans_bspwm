@@ -1,0 +1,100 @@
+#!/usr/bin/env sh
+
+[ "$1" = "-h" ] && cat << eof
+Usage:
+
+   mono-trans --toggle [monocle,fullscreen]  toggle transparent monocle
+
+   mono-trans --navigate [next,prev]         navigate to next/prev hidden nodes
+
+   mono-trans --close                        closes current node and unhides the previous one
+
+eof
+
+[ "$STATUS_BAR" ] || export STATUS_BAR=polybar
+top_padding=35
+
+nodeList=/tmp/$(bspc query -D -d)
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+
+hide_nodes() {
+   bspc query -N -n .local.leaf.!focused.!hidden | tee "$nodeList"
+   cat "$nodeList" | xargs -I% bspc node % -g hidden
+}
+
+unhide_nodes() {
+   cat "$nodeList" | xargs -I% bspc node % -g hidden
+   : > "$nodeList"
+}
+
+toggle_fs_on() {
+   killall $STATUS_BAR
+   bspc config top_padding 0
+   bspc desktop -l monocle
+   hide_nodes
+}
+
+toggle_fs_off() {
+   $STATUS_BAR &
+   bspc config top_padding $top_padding
+   bspc desktop -l tiled
+   unhide_nodes
+}
+
+case $1 in
+
+   --navigate)
+      if [ "$2" = "next" ]; then
+         bspc node -f next.local && exit 1
+      else
+         bspc node -f prev.local && exit 1
+      fi
+
+      [ ! -f "$nodeList" ] && exit 1
+      [ "$(wc -l < "$nodeList")" = 0 ] && exit 1
+
+      if [ "$2" = "next" ]; then
+         head -1 "$nodeList" | xargs -I% bspc node % -g hidden
+         sed -i '1d' "$nodeList"
+      else
+         tail -1 "$nodeList" | xargs -I% bspc node % -g hidden
+         sed -i '$d' "$nodeList"
+      fi
+
+      bspc query -N -n >> "$nodeList"
+      bspc node -g hidden
+
+      ;;
+
+   --toggle)
+
+      if [ "$2" = "fullscreen" ]; then
+         if pidof yabar; then
+            toggle_fs_on
+         else
+            toggle_fs_off
+         fi
+      else
+         if [ "$(bspc wm -g | cut -d: -f7)" = "LT" ]; then
+            bspc desktop -l monocle
+            hide_nodes
+         else
+            bspc desktop -l tiled
+            unhide_nodes
+         fi
+      fi
+      bspc node -n biggest.local
+      ;;
+
+   --close)
+      bspc node -c
+      if [ "$(wc -l < "$nodeList")" -gt 0 ]; then
+         tail -1 "$nodeList" | xargs -I% bspc node % -g hidden
+         sed -i '$d' "$nodeList"
+      fi
+      ;;
+
+   *) : ;;
+
+esac
