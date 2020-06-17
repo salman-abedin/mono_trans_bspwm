@@ -30,4 +30,6 @@ Change the status bar launch section according to your whim.
 ![bolt](https://github.com/salman-abedin/bolt)
 ### What is this sorcery of a system!
 ![magpie](https://github.com/salman-abedin/magpie)
+### You are so jazz! Where can I reach you!
+SalmanAbedin@disroot.org
 
