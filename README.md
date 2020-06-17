@@ -1,6 +1,6 @@
 ![](preview/preview.gif)
 
-### Transparent full-screen & monocle work-flow for BSPWM
+# Transparent full-screen & monocle work-flow for BSPWM
 
 # Features
    * Transparent Full-screen
