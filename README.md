@@ -3,8 +3,9 @@
 # Features
    * Transparent Fullscreen
    * Transparent Monocle
-   * Navigating forward & Backward
+   * Navigating forward & backward
    * Auto unhide after closing visible nodes
+   * Completely functional with regular work flow
 
 
 # Usage
