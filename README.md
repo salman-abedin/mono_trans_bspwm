@@ -1,13 +1,13 @@
 ![](preview/preview.gif)
 
 # Transparent full-screen & monocle work-flow for BSPWM
-No more ugly windows behind your beautiful transparent visible one
+No more ugly windows behind your beautiful transparent one
 
 # Features
-   * Clear transparent full-screen
-   * Clear transparent monocle
-   * Navigating forward & backward
-   * Auto navigate to hidden nodes after closing
+   * No background windows on fullscreen mode
+   * No background windows on monocle mode
+   * Navigation between hidden windows
+   * Auto navigate to previews hidden window after closing
    * fully functional with regular work flow
 
 # Dependencies
