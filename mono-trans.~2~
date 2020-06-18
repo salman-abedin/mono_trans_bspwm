@@ -11,36 +11,11 @@ Usage:
 
 eof
 
-[ "$STATUS_BAR" ] || export STATUS_BAR=yabaar
+[ "$STATUS_BAR" ] || export STATUS_BAR=yabar
 top_padding=35
-nodeList=/tmp/$(bspc query -D -d)
 
-launchBar() { $STATUS_BAR & }
-
-hide_nodes() {
-   bspc query -N -n .local.leaf.!focused.!hidden | tee "$nodeList"
-   cat "$nodeList" | xargs -I% bspc node % -g hidden
-}
-
-unhide_nodes() {
-   cat "$nodeList" | xargs -I% bspc node % -g hidden
-   : > "$nodeList"
-}
-
-toggle_fs_on() {
-   killall $STATUS_BAR
-   bspc config top_padding 0
-   xdo hide -dr
-   bspc desktop -l monocle
-   hide_nodes
-}
-
-toggle_fs_off() {
-   launchBar
-   bspc config top_padding $top_padding
-   xdo show -dr
-   bspc desktop -l tiled
-   unhide_nodes
+launchBar(){
+   $STATUS_BAR &
 }
 
 bspc config borderless_monocle true
@@ -78,20 +53,25 @@ case $1 in
 
       if [ "$2" = "fullscreen" ]; then
          if pidof yabar; then
-            toggle_fs_on
+            killall $STATUS_BAR
+            bspc config top_padding 0
+            xdo hide -dr
          else
-            toggle_fs_off
+            launchBar
+            bspc config top_padding $top_padding
+            xdo show -dr
          fi
+         bspc node -t ~fullscreen
       else
-         # Monocle mode
+         # Monocle Mode
          if [ "$(bspc wm -g | cut -d: -f7)" = "LT" ]; then
-            hide_nodes
+            xdo hide -dr
          else
-            unhide_nodes
+            xdo show -dr
          fi
          bspc desktop -l next
-         # bspc node -n biggest.local
-         # bspc node -f prev.local
+         bspc node -f prev.local
+         bspc node -n biggest.local
       fi
       ;;
 
