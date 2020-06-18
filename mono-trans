@@ -28,19 +28,9 @@ unhide_nodes() {
 }
 
 toggle_fs_on() {
-   killall $STATUS_BAR
-   bspc config top_padding 0
-   xdo hide -dr
-   bspc desktop -l monocle
-   hide_nodes
 }
 
 toggle_fs_off() {
-   launchBar
-   bspc config top_padding $top_padding
-   xdo show -dr
-   bspc desktop -l tiled
-   unhide_nodes
 }
 
 bspc config borderless_monocle true
@@ -78,9 +68,15 @@ case $1 in
 
       if [ "$2" = "fullscreen" ]; then
          if pidof yabar; then
-            toggle_fs_on
+            killall $STATUS_BAR
+            bspc config top_padding 0
+            bspc desktop -l monocle
+            hide_nodes
          else
-            toggle_fs_off
+            bspc config top_padding $top_padding
+            launchBar
+            bspc desktop -l tiled
+            unhide_nodes
          fi
       else
          # Monocle mode
