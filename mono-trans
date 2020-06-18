@@ -18,19 +18,13 @@ nodeList=/tmp/$(bspc query -D -d)
 launchBar() { $STATUS_BAR & }
 
 hide_nodes() {
-   bspc query -N -n .local.leaf.!focused.!hidden | tee "$nodeList"
-   cat "$nodeList" | xargs -I% bspc node % -g hidden
+  bspc query -N -n .local.leaf.!focused.!hidden | tee "$nodeList"
+  cat "$nodeList" | xargs -I% bspc node % -g hidden
 }
 
 unhide_nodes() {
-   cat "$nodeList" | xargs -I% bspc node % -g hidden
-   : > "$nodeList"
-}
-
-toggle_fs_on() {
-}
-
-toggle_fs_off() {
+  cat "$nodeList" | xargs -I% bspc node % -g hidden
+  : > "$nodeList"
 }
 
 bspc config borderless_monocle true
@@ -38,67 +32,66 @@ bspc config gapless_monocle true
 
 case $1 in
 
-   --navigate)
-      # Regular navigations
-      if [ "$2" = "next" ]; then
-         bspc node -f next.local && exit 1
+  --navigate)
+    # Regular navigations
+    if [ "$2" = "next" ]; then
+      bspc node -f next.local && exit 1
+    else
+      bspc node -f prev.local && exit 1
+    fi
+
+    # Edge cases
+    [ ! -f "$nodeList" ] && exit 1
+    [ "$(wc -l < "$nodeList")" = 0 ] && exit 1
+
+    # This is where the fun begins
+    if [ "$2" = "next" ]; then
+      head -1 "$nodeList" | xargs -I% bspc node % -g hidden
+      sed -i '1d' "$nodeList"
+    else
+      tail -1 "$nodeList" | xargs -I% bspc node % -g hidden
+      sed -i '$d' "$nodeList"
+    fi
+
+    bspc query -N -n >> "$nodeList"
+    bspc node -g hidden
+
+    ;;
+
+  --toggle)
+
+    if [ "$2" = "fullscreen" ]; then
+      if pidof yabar; then
+        killall $STATUS_BAR
+        bspc config top_padding 0
+        bspc desktop -l monocle
+        hide_nodes
       else
-         bspc node -f prev.local && exit 1
+        launchBar
+        bspc config top_padding $top_padding
+        bspc desktop -l tiled
+        unhide_nodes
       fi
-
-      # Edge cases
-      [ ! -f "$nodeList" ] && exit 1
-      [ "$(wc -l < "$nodeList")" = 0 ] && exit 1
-
-      # This is where the fun begins
-      if [ "$2" = "next" ]; then
-         head -1 "$nodeList" | xargs -I% bspc node % -g hidden
-         sed -i '1d' "$nodeList"
+    else # Monocle mode
+      if [ "$(bspc wm -g | cut -d: -f7)" = "LT" ]; then
+        hide_nodes
       else
-         tail -1 "$nodeList" | xargs -I% bspc node % -g hidden
-         sed -i '$d' "$nodeList"
+        unhide_nodes
       fi
+      bspc desktop -l next
+      # bspc node -n biggest.local
+      # bspc node -f prev.local
+    fi
+    ;;
 
-      bspc query -N -n >> "$nodeList"
-      bspc node -g hidden
+  --close)
+    bspc node -c
+    if [ "$(wc -l < "$nodeList")" -gt 0 ]; then
+      tail -1 "$nodeList" | xargs -I% bspc node % -g hidden
+      sed -i '$d' "$nodeList"
+    fi
+    ;;
 
-      ;;
-
-   --toggle)
-
-      if [ "$2" = "fullscreen" ]; then
-         if pidof yabar; then
-            killall $STATUS_BAR
-            bspc config top_padding 0
-            bspc desktop -l monocle
-            hide_nodes
-         else
-            bspc config top_padding $top_padding
-            launchBar
-            bspc desktop -l tiled
-            unhide_nodes
-         fi
-      else
-         # Monocle mode
-         if [ "$(bspc wm -g | cut -d: -f7)" = "LT" ]; then
-            hide_nodes
-         else
-            unhide_nodes
-         fi
-         bspc desktop -l next
-         # bspc node -n biggest.local
-         # bspc node -f prev.local
-      fi
-      ;;
-
-   --close)
-      bspc node -c
-      if [ "$(wc -l < "$nodeList")" -gt 0 ]; then
-         tail -1 "$nodeList" | xargs -I% bspc node % -g hidden
-         sed -i '$d' "$nodeList"
-      fi
-      ;;
-
-   *) : ;;
+  *) : ;;
 
 esac
