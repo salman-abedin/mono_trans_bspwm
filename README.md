@@ -1,6 +1,8 @@
 ![](preview/preview.gif)
 
-# Transparent full-screen & monocle work-flow for BSPWM
+# ~~Transparent full-screen & monocle work-flow for BSPWM~~
+
+# This was deprecated in favor of [Crystal](https://github.com/salman-abedin/crystal)
 
 No more ugly windows behind your beautiful transparent one
 
