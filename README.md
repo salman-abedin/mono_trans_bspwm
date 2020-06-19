@@ -26,28 +26,3 @@ mono-trans --navigate [next,prev]         # navigate to next/prev hidden nodes
 mono-trans --close                        # closes current node and unhides the previous one
 ```
 
-# FAQ
-
-### I don't use yabar!
-
-Change the **STATUS_BAR** variable on top of the script.
-
-### I launch my status bar fancy!
-
-Change the **launchBar** function on top of the script.
-
-### Your status bar looks cool! What's that!
-
-![Uniblocks](https://github.com/salman-abedin/uniblocks)
-
-### How are you launching those files and folders so fast!
-
-![Bolt](https://github.com/salman-abedin/bolt)
-
-### What is this sorcery of a system!
-
-![Magpie](https://github.com/salman-abedin/magpie)
-
-### You are so jazz! Where can I reach you!
-
-SalmanAbedin@disroot.org
