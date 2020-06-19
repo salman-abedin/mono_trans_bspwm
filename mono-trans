@@ -68,9 +68,11 @@ case $1 in
         unhide_nodes
       fi
       bspc desktop -l next
-      # bspc node -n biggest.local
-      # bspc node -f prev.local
     fi
+
+    bspc node -f prev.local
+    bspc node -n biggest.local
+
     ;;
 
   --close)
